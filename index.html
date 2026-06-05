@@ -1,4 +1,4 @@
-mkdir -p /mnt/user-data/outputs/trading-journal && cat > /mnt/user-data/outputs/trading-journal/index.html << 'ENDOFFILE'
+cat > /mnt/user-data/outputs/trading-journal/index.html << 'ENDOFFILE'
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -9,30 +9,23 @@ mkdir -p /mnt/user-data/outputs/trading-journal && cat > /mnt/user-data/outputs/
 <style>
 :root{
   --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#8B6914;--gold-muted:#6B5020;
-  --black:#080808;--black-2:#101010;--black-3:#181818;--black-4:#202020;--black-5:#282828;
+  --black:#080808;--black-2:#101010;--black-3:#181818;--black-4:#202020;
   --border:rgba(201,168,76,0.18);--border-hover:rgba(201,168,76,0.45);
   --text:#EDE5D0;--text-muted:#7A7060;--text-dim:#4A4438;
-  --green:#3DBE72;--red:#D94F4F;--blue:#4C8EC9;
-  --radius:0px;
+  --green:#3DBE72;--red:#D94F4F;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--black);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;min-height:100vh;}
-
-/* ── HEADER ── */
 header{background:var(--black-2);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:200;}
 .logo{display:flex;align-items:center;gap:12px;}
 .logo-mark{width:32px;height:32px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:14px;}
 .logo-text{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:var(--gold);letter-spacing:3px;}
 .logo-sub{font-size:10px;color:var(--text-muted);letter-spacing:4px;display:block;margin-top:-3px;}
 .header-right{display:flex;gap:8px;align-items:center;}
-
-/* ── TABS ── */
-.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);background:var(--black-2);position:sticky;top:60px;z-index:190;}
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--black-2);position:sticky;top:60px;z-index:190;}
 .tab{padding:12px 28px;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;transition:all 0.2s;}
 .tab:hover{color:var(--text);}
 .tab.active{color:var(--gold);border-bottom-color:var(--gold);}
-
-/* ── BUTTONS ── */
 .btn{background:transparent;border:1px solid var(--border);color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;padding:7px 18px;cursor:pointer;transition:all 0.2s;text-transform:uppercase;}
 .btn:hover{background:rgba(201,168,76,0.08);border-color:var(--gold);}
 .btn-gold{background:var(--gold);border-color:var(--gold);color:#000;}
@@ -40,25 +33,19 @@ header{background:var(--black-2);border-bottom:1px solid var(--border);padding:0
 .btn-sm{padding:4px 12px;font-size:11px;}
 .btn-danger{color:var(--red);border-color:rgba(217,79,79,0.25);}
 .btn-danger:hover{background:rgba(217,79,79,0.08);border-color:var(--red);}
-
-/* ── MAIN ── */
 main{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
-
-/* ── STATS BAR ── */
 .stats-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.5rem;overflow:hidden;}
 .stat-cell{background:var(--black-2);padding:14px 12px;text-align:center;}
 .stat-val{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--gold);line-height:1;}
 .stat-val.g{color:var(--green);}
 .stat-val.r{color:var(--red);}
 .stat-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-top:4px;}
-
-/* ── CALENDAR VIEW ── */
 .calendar-section{margin-bottom:1.5rem;}
 .calendar-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
 .calendar-month{font-family:'Cinzel',serif;font-size:16px;color:var(--gold);letter-spacing:3px;}
 .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);overflow:hidden;}
 .cal-header{background:var(--black-3);padding:8px 4px;text-align:center;font-size:10px;font-weight:600;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;}
-.cal-day{background:var(--black-2);min-height:72px;padding:6px;position:relative;cursor:default;transition:background 0.15s;}
+.cal-day{background:var(--black-2);min-height:72px;padding:6px;position:relative;transition:background 0.15s;}
 .cal-day.has-trades{cursor:pointer;}
 .cal-day.has-trades:hover{background:var(--black-3);}
 .cal-day.other-month{background:var(--black);opacity:0.4;}
@@ -73,14 +60,10 @@ main{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
 .cal-dot .dp{background:var(--green);}
 .cal-dot .dl{background:var(--red);}
 .cal-dot .db{background:var(--gold);}
-
-/* ── DAY SECTION ── */
 .date-section{margin-bottom:2rem;}
-.date-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--black-3);border:1px solid var(--border);border-bottom:none;margin-bottom:0;}
+.date-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--black-3);border:1px solid var(--border);border-bottom:none;}
 .date-title{font-family:'Cinzel',serif;font-size:15px;color:var(--gold);letter-spacing:2px;}
 .date-meta{font-size:11px;color:var(--text-muted);letter-spacing:2px;margin-top:1px;}
-
-/* ── TRADE CARD ── */
 .trade-card{border:1px solid var(--border);margin-bottom:8px;background:var(--black-2);position:relative;transition:border-color 0.2s;}
 .trade-card:hover{border-color:var(--border-hover);}
 .trade-card::before{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:var(--gold-dark);transition:background 0.2s;}
@@ -96,35 +79,23 @@ main{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
 .trade-card.collapsed .chevron{transform:rotate(-90deg);}
 .tc-body{padding:16px;border-top:1px solid var(--border);}
 .trade-card.collapsed .tc-body{display:none;}
-
-/* ── BADGES ── */
 .badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:1.5px;padding:3px 9px;border:1px solid;text-transform:uppercase;}
 .b-profit{color:var(--green);border-color:rgba(61,190,114,0.35);background:rgba(61,190,114,0.08);}
 .b-loss{color:var(--red);border-color:rgba(217,79,79,0.35);background:rgba(217,79,79,0.08);}
 .b-be{color:var(--gold);border-color:rgba(201,168,76,0.35);background:rgba(201,168,76,0.08);}
 .b-rating{color:var(--gold-light);border-color:rgba(232,201,122,0.3);background:rgba(232,201,122,0.05);}
 .b-neutral{color:var(--text-muted);border-color:var(--border);}
-
-/* ── FIELD SECTIONS ── */
 .tc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:14px;}
 .field-block{display:flex;flex-direction:column;gap:6px;}
 .field-lbl{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);}
 .opt-row{display:flex;flex-wrap:wrap;gap:5px;}
-
-/* ── OPT BUTTONS ── */
 .opt{background:transparent;border:1px solid var(--border);color:var(--text-dim);font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;padding:4px 11px;cursor:pointer;transition:all 0.12s;text-transform:uppercase;white-space:nowrap;}
 .opt:hover{border-color:var(--gold-muted);color:var(--text);}
 .opt.sel{background:rgba(201,168,76,0.12);border-color:var(--gold);color:var(--gold);}
 .opt.sel.g{background:rgba(61,190,114,0.12);border-color:var(--green);color:var(--green);}
 .opt.sel.r{background:rgba(217,79,79,0.12);border-color:var(--red);color:var(--red);}
-
-/* ── DIVIDER ── */
 .divider{border:none;border-top:1px solid var(--border);margin:14px 0;}
-
-/* ── DOL ── */
 .dol-wrap{display:flex;flex-wrap:wrap;gap:4px;}
-
-/* ── PHOTOS ── */
 .photo-drop{border:1px dashed var(--border);padding:14px;text-align:center;position:relative;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:70px;}
 .photo-drop:hover,.photo-drop.drag-over{border-color:var(--gold);background:rgba(201,168,76,0.04);}
 .photo-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
@@ -136,13 +107,9 @@ main{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
 .photo-thumb img{width:100%;height:100%;object-fit:cover;border:1px solid var(--border);cursor:zoom-in;transition:border-color 0.15s;}
 .photo-thumb img:hover{border-color:var(--gold);}
 .photo-thumb .del-ph{position:absolute;top:-5px;right:-5px;width:16px;height:16px;background:var(--red);border:none;color:#fff;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-
-/* ── NOTES ── */
 .notes-ta{background:var(--black-3);border:1px solid var(--border);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:14px;padding:10px 12px;width:100%;resize:vertical;min-height:75px;outline:none;transition:border-color 0.2s;}
 .notes-ta:focus{border-color:var(--gold);}
 .notes-ta::placeholder{color:var(--text-dim);font-style:italic;}
-
-/* ── MODAL ── */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:500;align-items:center;justify-content:center;}
 .overlay.open{display:flex;}
 .modal{background:var(--black-2);border:1px solid var(--border);padding:1.75rem;width:360px;max-width:95vw;}
@@ -152,29 +119,17 @@ main{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
 .modal-field input[type=date]{background:var(--black-3);border:1px solid var(--border);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:14px;padding:8px 11px;width:100%;outline:none;color-scheme:dark;}
 .modal-field input[type=date]:focus{border-color:var(--gold);}
 .modal-actions{display:flex;gap:8px;margin-top:1.25rem;justify-content:flex-end;}
-
-/* ── LIGHTBOX ── */
 .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:900;align-items:center;justify-content:center;}
 .lightbox.open{display:flex;}
 .lightbox img{max-width:90vw;max-height:90vh;border:1px solid var(--border);}
 .lb-close{position:fixed;top:18px;right:22px;background:transparent;border:1px solid var(--border);color:var(--gold);font-size:18px;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-
-/* ── TOAST ── */
 .toast{position:fixed;bottom:20px;right:20px;background:var(--black-3);border:1px solid var(--gold);color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;padding:9px 18px;text-transform:uppercase;z-index:999;transform:translateY(60px);opacity:0;transition:all .25s;}
 .toast.show{transform:translateY(0);opacity:1;}
-
-/* ── EMPTY ── */
 .empty{text-align:center;padding:3.5rem 0;}
 .empty-icon{font-family:'Cinzel',serif;font-size:28px;color:var(--gold-dark);letter-spacing:4px;}
 .empty-title{font-family:'Cinzel',serif;font-size:14px;color:var(--text-muted);letter-spacing:3px;margin-top:10px;}
 .empty-sub{font-size:12px;color:var(--text-dim);margin-top:6px;letter-spacing:1px;}
-
-@media(max-width:768px){
-  header{padding:0 1rem;}main{padding:1rem;}
-  .stats-bar{grid-template-columns:repeat(3,1fr);}
-  .tc-grid{grid-template-columns:1fr;}
-  .tab{padding:10px 14px;font-size:10px;}
-}
+@media(max-width:768px){header{padding:0 1rem;}main{padding:1rem;}.stats-bar{grid-template-columns:repeat(3,1fr);}.tc-grid{grid-template-columns:1fr;}.tab{padding:10px 14px;font-size:10px;}}
 </style>
 </head>
 <body>
@@ -196,14 +151,12 @@ main{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
 </header>
 
 <div class="tabs">
-  <button class="tab active" onclick="switchTab('journal',this)">Journal</button>
-  <button class="tab" onclick="switchTab('calendar',this)">Kalender</button>
+  <button class="tab active" id="tab-journal" onclick="switchTab('journal')">Journal</button>
+  <button class="tab" id="tab-calendar" onclick="switchTab('calendar')">Kalender</button>
 </div>
 
-<main id="mainWrap">
-
-  <!-- STATS -->
-  <div class="stats-bar" id="statsBar">
+<main>
+  <div class="stats-bar">
     <div class="stat-cell"><div class="stat-val" id="sTotal">0</div><div class="stat-lbl">Trades</div></div>
     <div class="stat-cell"><div class="stat-val g" id="sWins">0</div><div class="stat-lbl">Wins</div></div>
     <div class="stat-cell"><div class="stat-val r" id="sLosses">0</div><div class="stat-lbl">Losses</div></div>
@@ -211,19 +164,17 @@ main{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
     <div class="stat-cell"><div class="stat-val" id="sWR">0%</div><div class="stat-lbl">Win Rate*</div></div>
     <div class="stat-cell"><div class="stat-val" id="sAplus">0</div><div class="stat-lbl">A+ Trades</div></div>
   </div>
-  <div style="font-size:9px;color:var(--text-dim);letter-spacing:1px;margin:-10px 0 14px;text-align:right;">* Win rate excl. break even</div>
+  <div style="font-size:9px;color:var(--text-dim);letter-spacing:1px;margin:-10px 0 14px;text-align:right;">* excl. break even</div>
 
-  <!-- JOURNAL TAB -->
   <div id="tabJournal">
     <div id="journalContainer"></div>
-    <div id="emptyState" class="empty">
+    <div id="emptyState" class="empty" style="display:none">
       <div class="empty-icon">◆</div>
       <div class="empty-title">No entries yet</div>
       <div class="empty-sub">Klik op <strong style="color:var(--gold)">+ New Day</strong> om te beginnen</div>
     </div>
   </div>
 
-  <!-- CALENDAR TAB -->
   <div id="tabCalendar" style="display:none">
     <div class="calendar-section">
       <div class="calendar-nav">
@@ -234,10 +185,8 @@ main{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
       <div class="calendar-grid" id="calGrid"></div>
     </div>
   </div>
-
 </main>
 
-<!-- NEW DAY MODAL -->
 <div class="overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-title">◆ New Trading Day</div>
@@ -249,7 +198,6 @@ main{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
   </div>
 </div>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <button class="lb-close" onclick="closeLightbox()">✕</button>
   <img id="lbImg" src="">
@@ -258,94 +206,109 @@ main{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;}
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── STATE ───────────────────────────────────────────
-let journal = JSON.parse(localStorage.getItem('tj_v2') || '{}');
-let calYear, calMonth;
-const now = new Date();
-calYear = now.getFullYear();
-calMonth = now.getMonth();
+// ── DATA: leest tj_data (oud) OF tj_journal (nieuw), slaat altijd op in beide ──
+const KEY = 'tj_journal';
+const KEY_OLD = 'tj_data';
 
-// ─── SAVE / STATS ────────────────────────────────────
+function loadData() {
+  // Probeer nieuwe key eerst
+  const newData = localStorage.getItem(KEY);
+  if (newData) {
+    try { return JSON.parse(newData); } catch(e) {}
+  }
+  // Fallback naar oude key
+  const oldData = localStorage.getItem(KEY_OLD);
+  if (oldData) {
+    try {
+      const parsed = JSON.parse(oldData);
+      // Migreer meteen naar nieuwe key
+      localStorage.setItem(KEY, oldData);
+      showToast('Oude data hersteld ✓');
+      return parsed;
+    } catch(e) {}
+  }
+  return {};
+}
+
+let journal = loadData();
+
 function save() {
-  localStorage.setItem('tj_v2', JSON.stringify(journal));
+  localStorage.setItem(KEY, JSON.stringify(journal));
+  // Ook oude key bijhouden zodat je nooit data kwijt bent
+  localStorage.setItem(KEY_OLD, JSON.stringify(journal));
   updateStats();
 }
 
 function updateStats() {
-  let total=0, wins=0, losses=0, be=0, aplus=0;
-  Object.values(journal).forEach(day => day.trades.forEach(t => {
+  let total=0,wins=0,losses=0,be=0,aplus=0;
+  Object.values(journal).forEach(day=>day.trades.forEach(t=>{
     total++;
-    if(t.pnl==='profit') wins++;
-    else if(t.pnl==='loss') losses++;
-    else if(t.pnl==='be') be++;
-    if(t.rating==='A+') aplus++;
+    if(t.pnl==='profit')wins++;
+    else if(t.pnl==='loss')losses++;
+    else if(t.pnl==='be')be++;
+    if(t.rating==='A+')aplus++;
   }));
-  document.getElementById('sTotal').textContent = total;
-  document.getElementById('sWins').textContent = wins;
-  document.getElementById('sLosses').textContent = losses;
-  document.getElementById('sBE').textContent = be;
-  // Win rate excludes BE
-  const denom = wins + losses;
-  document.getElementById('sWR').textContent = denom > 0 ? Math.round((wins/denom)*100)+'%' : '0%';
-  document.getElementById('sAplus').textContent = aplus;
+  document.getElementById('sTotal').textContent=total;
+  document.getElementById('sWins').textContent=wins;
+  document.getElementById('sLosses').textContent=losses;
+  document.getElementById('sBE').textContent=be;
+  const denom=wins+losses;
+  document.getElementById('sWR').textContent=denom>0?Math.round((wins/denom)*100)+'%':'0%';
+  document.getElementById('sAplus').textContent=aplus;
 }
 
-// ─── TABS ────────────────────────────────────────────
-function switchTab(tab, btn) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tabJournal').style.display = tab==='journal' ? '' : 'none';
-  document.getElementById('tabCalendar').style.display = tab==='calendar' ? '' : 'none';
+// ── TABS ──
+function switchTab(tab) {
+  document.getElementById('tab-journal').classList.toggle('active', tab==='journal');
+  document.getElementById('tab-calendar').classList.toggle('active', tab==='calendar');
+  document.getElementById('tabJournal').style.display = tab==='journal'?'':'none';
+  document.getElementById('tabCalendar').style.display = tab==='calendar'?'':'none';
   if(tab==='calendar') renderCalendar();
 }
 
-// ─── RENDER JOURNAL ──────────────────────────────────
+// ── RENDER ──
 function render() {
-  const c = document.getElementById('journalContainer');
-  const e = document.getElementById('emptyState');
-  const dates = Object.keys(journal).sort((a,b) => b.localeCompare(a));
-  if(!dates.length) { c.innerHTML=''; e.style.display='block'; updateStats(); return; }
+  const c=document.getElementById('journalContainer');
+  const e=document.getElementById('emptyState');
+  const dates=Object.keys(journal).sort((a,b)=>b.localeCompare(a));
+  if(!dates.length){c.innerHTML='';e.style.display='block';updateStats();return;}
   e.style.display='none';
-  c.innerHTML = dates.map(d => renderDay(d)).join('');
+  c.innerHTML=dates.map(d=>renderDay(d)).join('');
   updateStats();
 }
 
-function fmtDate(d) {
-  return new Date(d+'T00:00:00').toLocaleDateString('nl-BE', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+function fmtDate(d){
+  return new Date(d+'T00:00:00').toLocaleDateString('nl-BE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 }
 
-function renderDay(date) {
-  const trades = journal[date].trades || [];
+function renderDay(date){
+  const trades=journal[date].trades||[];
   return `<div class="date-section" id="day-${date}">
     <div class="date-header">
-      <div>
-        <div class="date-title">${fmtDate(date)}</div>
-        <div class="date-meta">${trades.length} trade${trades.length!==1?'s':''}</div>
-      </div>
+      <div><div class="date-title">${fmtDate(date)}</div><div class="date-meta">${trades.length} trade${trades.length!==1?'s':''}</div></div>
       <div style="display:flex;gap:8px">
         <button class="btn btn-sm" onclick="addTrade('${date}')">+ Trade</button>
         <button class="btn btn-sm btn-danger" onclick="deleteDay('${date}')">✕ Dag</button>
       </div>
     </div>
-    ${trades.map((t,i) => renderTrade(date,i,t)).join('')}
-    ${!trades.length ? '<div style="padding:12px 16px;color:var(--text-dim);font-size:11px;letter-spacing:2px;border:1px solid var(--border);border-top:none;background:var(--black-2)">GEEN TRADES — KLIK + TRADE</div>' : ''}
+    ${trades.map((t,i)=>renderTrade(date,i,t)).join('')}
+    ${!trades.length?'<div style="padding:12px 16px;color:var(--text-dim);font-size:11px;letter-spacing:2px;border:1px solid var(--border);border-top:none;background:var(--black-2)">GEEN TRADES — KLIK + TRADE</div>':''}
   </div>`;
 }
 
-function renderTrade(date, idx, t) {
-  const pnlClass = t.pnl==='profit'?'profit':t.pnl==='loss'?'loss':t.pnl==='be'?'breakeven':'';
-  const pnlBadge = t.pnl ? `<span class="badge ${t.pnl==='profit'?'b-profit':t.pnl==='loss'?'b-loss':'b-be'}">${t.pnl==='be'?'B/E':t.pnl}</span>` : '';
-  const ratingBadge = t.rating ? `<span class="badge b-rating">${t.rating}</span>` : '';
-  const stratBadge = t.strategy ? `<span class="badge b-neutral">${t.strategy}</span>` : '';
-  const biasBadge = t.bias ? `<span class="badge b-neutral">${t.bias}</span>` : '';
-  const photos = t.photos || [];
-
-  const dolOpts = ['NWOG','NDOG','EQH','EQL','BSL','SSL','15M ITL','15M ITH','1H ITL','1H ITH','4H ITL','4H ITH','15M FVG','1H FVG','4H FVG','Daily ITL','Daily ITH','Daily FVG','ATH','Swing Low','Swing High','PDL','PDH'];
-  const tfOpts = ['IFVG','30sec','1M','2M','3M','4M','5M'];
-  const timeOpts = ['Macro','10AM–10:30','10:30–11AM'];
-  const stratOpts = ['Continuation','Mech','Other'];
-  const biasOpts = ['Bullish','Bearish','Neutraal'];
-  const ratingOpts = ['B','B+','A','A+'];
+function renderTrade(date,idx,t){
+  const pnlClass=t.pnl==='profit'?'profit':t.pnl==='loss'?'loss':t.pnl==='be'?'breakeven':'';
+  const pnlBadge=t.pnl?`<span class="badge ${t.pnl==='profit'?'b-profit':t.pnl==='loss'?'b-loss':'b-be'}">${t.pnl==='be'?'B/E':t.pnl}</span>`:'';
+  const ratingBadge=t.rating?`<span class="badge b-rating">${t.rating}</span>`:'';
+  const stratBadge=t.strategy?`<span class="badge b-neutral">${t.strategy}</span>`:'';
+  const biasBadge=t.bias?`<span class="badge b-neutral">${t.bias}</span>`:'';
+  const photos=t.photos||[];
+  const dolOpts=['NWOG','NDOG','EQH','EQL','BSL','SSL','15M ITL','15M ITH','1H ITL','1H ITH','4H ITL','4H ITH','15M FVG','1H FVG','4H FVG','Daily ITL','Daily ITH','Daily FVG','ATH','Swing Low','Swing High','PDL','PDH'];
+  const tfOpts=['IFVG','30sec','1M','2M','3M','4M','5M'];
+  const timeOpts=['Macro','10AM–10:30','10:30–11AM'];
+  const stratOpts=['Continuation','Mech','Other'];
+  const biasOpts=['Bullish','Bearish','Neutraal'];
+  const ratingOpts=['B','B+','A','A+'];
 
   return `<div class="trade-card ${pnlClass} ${t.collapsed?'collapsed':''}" id="tc-${date}-${idx}">
     <div class="tc-header" onclick="toggleCollapse('${date}',${idx})">
@@ -362,8 +325,7 @@ function renderTrade(date, idx, t) {
       <div class="tc-grid">
         <div class="field-block"><div class="field-lbl">P&amp;L Result</div><div class="opt-row">
           ${[['profit','Profit','g'],['loss','Loss','r'],['be','Break Even','']].map(([v,l,c])=>
-            `<button class="opt ${c} ${t.pnl===v?'sel':''}" onclick="setF('${date}',${idx},'pnl','${v}',this,'${c}')">${l}</button>`
-          ).join('')}
+            `<button class="opt ${c} ${t.pnl===v?'sel':''}" onclick="setF('${date}',${idx},'pnl','${v}',this,'${c}')">${l}</button>`).join('')}
         </div></div>
         <div class="field-block"><div class="field-lbl">Tijdvenster</div><div class="opt-row">
           ${timeOpts.map(v=>`<button class="opt ${t.time===v?'sel':''}" onclick="setF('${date}',${idx},'time','${v}',this,'')">${v}</button>`).join('')}
@@ -380,39 +342,31 @@ function renderTrade(date, idx, t) {
         <div class="field-block"><div class="field-lbl">Rating</div><div class="opt-row">
           ${ratingOpts.map(v=>`<button class="opt ${t.rating===v?'sel':''}" onclick="setF('${date}',${idx},'rating','${v}',this,'')">${v}</button>`).join('')}
         </div></div>
-        <div class="field-block"><div class="field-lbl">SMT?</div><div class="opt-row" id="smtrow-${date}-${idx}">
+        <div class="field-block"><div class="field-lbl">SMT?</div><div class="opt-row">
           <button class="opt ${t.smt===true?'sel':''}" onclick="smtYes('${date}',${idx})">Ja</button>
           <button class="opt r ${t.smt===false?'sel':''}" onclick="smtNo('${date}',${idx})">Nee</button>
-          ${t.smt===true ? ['Lokaal','Groot'].map(v=>`<button class="opt ${t.smtType===v?'sel':''}" onclick="setF('${date}',${idx},'smtType','${v}',this,'')">${v}</button>`).join('') : ''}
+          ${t.smt===true?['Lokaal','Groot'].map(v=>`<button class="opt ${t.smtType===v?'sel':''}" onclick="setF('${date}',${idx},'smtType','${v}',this,'')">${v}</button>`).join(''):''}
         </div></div>
         <div class="field-block"><div class="field-lbl">V-Shape?</div><div class="opt-row">
           <button class="opt ${t.vshape===true?'sel':''}" onclick="setF('${date}',${idx},'vshape',true,this,'')">Ja</button>
           <button class="opt r ${t.vshape===false?'sel':''}" onclick="setF('${date}',${idx},'vshape',false,this,'r')">Nee</button>
         </div></div>
       </div>
-
       <hr class="divider">
       <div class="field-block" style="margin-bottom:14px"><div class="field-lbl" style="margin-bottom:6px">Draw on Liquidity (DOL)</div>
-        <div class="dol-wrap">
-          ${dolOpts.map(v=>`<button class="opt ${(t.dol||[]).includes(v)?'sel':''}" onclick="togDol('${date}',${idx},'${v}',this)">${v}</button>`).join('')}
-        </div>
+        <div class="dol-wrap">${dolOpts.map(v=>`<button class="opt ${(t.dol||[]).includes(v)?'sel':''}" onclick="togDol('${date}',${idx},'${v}',this)">${v}</button>`).join('')}</div>
       </div>
-
       <hr class="divider">
       <div class="field-block" style="margin-bottom:14px">
         <div class="field-lbl" style="margin-bottom:6px">Screenshots / Grafieken</div>
-        <div class="photo-drop" id="drop-${date}-${idx}"
-          ondragover="dragOver(event,this)" ondragleave="dragLeave(this)" ondrop="dropFiles(event,'${date}',${idx})">
+        <div class="photo-drop" id="drop-${date}-${idx}" ondragover="dragOver(event,this)" ondragleave="dragLeave(this)" ondrop="dropFiles(event,'${date}',${idx})">
           <input type="file" accept="image/*" multiple onchange="addPhotos('${date}',${idx},this)">
           <div class="photo-drop-icon">⬆</div>
           <div class="photo-drop-lbl">Klik, sleep of plak (Ctrl+V)</div>
           <div class="photo-drop-sub">Foto's worden direct ingeladen</div>
         </div>
-        <div class="photo-grid" id="pg-${date}-${idx}">
-          ${photos.map((src,pi)=>photoThumb(src,date,idx,pi)).join('')}
-        </div>
+        <div class="photo-grid" id="pg-${date}-${idx}">${photos.map((src,pi)=>thumb(src,date,idx,pi)).join('')}</div>
       </div>
-
       <hr class="divider">
       <div class="field-block">
         <div class="field-lbl" style="margin-bottom:6px">Extra Notities</div>
@@ -422,226 +376,150 @@ function renderTrade(date, idx, t) {
   </div>`;
 }
 
-function photoThumb(src, date, idx, pi) {
+function thumb(src,date,idx,pi){
   return `<div class="photo-thumb"><img src="${src}" onclick="openLb('${src}')"><button class="del-ph" onclick="removePhoto('${date}',${idx},${pi})">✕</button></div>`;
 }
 
-// ─── FIELD SETTERS ───────────────────────────────────
-function setF(date, idx, field, value, btn, cls) {
-  const t = journal[date].trades[idx];
-  t[field] = (t[field]===value) ? null : value;
-  save(); render();
+// ── FIELD SETTERS ──
+function setF(date,idx,field,value,btn,cls){
+  const t=journal[date].trades[idx];
+  t[field]=(t[field]===value)?null:value;
+  save();render();
 }
-function smtYes(date, idx) {
-  const t = journal[date].trades[idx];
-  t.smt = t.smt===true ? null : true;
-  save(); render();
-}
-function smtNo(date, idx) {
-  const t = journal[date].trades[idx];
-  t.smt = t.smt===false ? null : false;
-  if(t.smt===false) t.smtType=null;
-  save(); render();
-}
-function togDol(date, idx, v, btn) {
-  const t = journal[date].trades[idx];
-  if(!t.dol) t.dol=[];
-  const i = t.dol.indexOf(v);
-  if(i>-1) { t.dol.splice(i,1); btn.classList.remove('sel'); }
-  else { t.dol.push(v); btn.classList.add('sel'); }
+function smtYes(date,idx){const t=journal[date].trades[idx];t.smt=t.smt===true?null:true;save();render();}
+function smtNo(date,idx){const t=journal[date].trades[idx];t.smt=t.smt===false?null:false;if(t.smt===false)t.smtType=null;save();render();}
+function togDol(date,idx,v,btn){
+  const t=journal[date].trades[idx];if(!t.dol)t.dol=[];
+  const i=t.dol.indexOf(v);
+  if(i>-1){t.dol.splice(i,1);btn.classList.remove('sel');}else{t.dol.push(v);btn.classList.add('sel');}
   save();
 }
-function setNotes(date, idx, val) {
-  journal[date].trades[idx].notes = val;
-  save();
-}
-function toggleCollapse(date, idx) {
-  journal[date].trades[idx].collapsed = !journal[date].trades[idx].collapsed;
-  save(); render();
-}
+function setNotes(date,idx,val){journal[date].trades[idx].notes=val;save();}
+function toggleCollapse(date,idx){journal[date].trades[idx].collapsed=!journal[date].trades[idx].collapsed;save();render();}
 
-// ─── PHOTOS ──────────────────────────────────────────
-function processFiles(date, idx, files) {
-  const t = journal[date].trades[idx];
-  if(!t.photos) t.photos=[];
+// ── PHOTOS ──
+function processFiles(date,idx,files){
+  const t=journal[date].trades[idx];if(!t.photos)t.photos=[];
   let loaded=0;
-  Array.from(files).forEach(f => {
-    if(!f.type.startsWith('image/')) return;
-    const r = new FileReader();
-    r.onload = e => {
-      t.photos.push(e.target.result);
-      loaded++;
-      if(loaded===files.length) { save(); redrawPhotos(date,idx,t); }
-    };
+  Array.from(files).forEach(f=>{
+    if(!f.type.startsWith('image/'))return;
+    const r=new FileReader();
+    r.onload=e=>{t.photos.push(e.target.result);loaded++;if(loaded===files.length){save();redrawPhotos(date,idx,t);}};
     r.readAsDataURL(f);
   });
 }
-function addPhotos(date, idx, input) { processFiles(date,idx,input.files); }
-function dragOver(e, el) { e.preventDefault(); el.classList.add('drag-over'); }
-function dragLeave(el) { el.classList.remove('drag-over'); }
-function dropFiles(e, date, idx) {
-  e.preventDefault();
-  document.getElementById(`drop-${date}-${idx}`).classList.remove('drag-over');
-  processFiles(date,idx,e.dataTransfer.files);
-}
-function removePhoto(date, idx, pi) {
-  journal[date].trades[idx].photos.splice(pi,1);
-  save(); redrawPhotos(date,idx,journal[date].trades[idx]);
-}
-function redrawPhotos(date, idx, t) {
-  const g = document.getElementById(`pg-${date}-${idx}`);
-  if(g) g.innerHTML = (t.photos||[]).map((src,pi)=>photoThumb(src,date,idx,pi)).join('');
-}
+function addPhotos(date,idx,input){processFiles(date,idx,input.files);}
+function dragOver(e,el){e.preventDefault();el.classList.add('drag-over');}
+function dragLeave(el){el.classList.remove('drag-over');}
+function dropFiles(e,date,idx){e.preventDefault();document.getElementById(`drop-${date}-${idx}`).classList.remove('drag-over');processFiles(date,idx,e.dataTransfer.files);}
+function removePhoto(date,idx,pi){journal[date].trades[idx].photos.splice(pi,1);save();redrawPhotos(date,idx,journal[date].trades[idx]);}
+function redrawPhotos(date,idx,t){const g=document.getElementById(`pg-${date}-${idx}`);if(g)g.innerHTML=(t.photos||[]).map((src,pi)=>thumb(src,date,idx,pi)).join('');}
 
-// Ctrl+V paste anywhere
-document.addEventListener('paste', e => {
-  const items = e.clipboardData && e.clipboardData.items;
-  if(!items) return;
-  // find active/open trade cards
-  const openCards = document.querySelectorAll('.trade-card:not(.collapsed)');
-  if(!openCards.length) return;
-  // use last open card
-  const card = openCards[openCards.length-1];
-  const id = card.id; // tc-DATE-IDX
-  const parts = id.split('-');
-  const idx = parseInt(parts[parts.length-1]);
-  const date = parts.slice(1, parts.length-1).join('-');
-  Array.from(items).forEach(item => {
-    if(item.type.startsWith('image/')) {
-      const f = item.getAsFile();
-      processFiles(date, idx, [f]);
-      showToast('Screenshot geplakt ✓');
-    }
+// Ctrl+V paste
+document.addEventListener('paste',e=>{
+  const items=e.clipboardData&&e.clipboardData.items;if(!items)return;
+  const openCards=document.querySelectorAll('.trade-card:not(.collapsed)');if(!openCards.length)return;
+  const card=openCards[openCards.length-1];
+  const parts=card.id.split('-');
+  const idx=parseInt(parts[parts.length-1]);
+  const date=parts.slice(1,parts.length-1).join('-');
+  Array.from(items).forEach(item=>{
+    if(item.type.startsWith('image/')){processFiles(date,idx,[item.getAsFile()]);showToast('Screenshot geplakt ✓');}
   });
 });
 
-// ─── DAY / TRADE CRUD ────────────────────────────────
-function addTrade(date) {
+// ── CRUD ──
+function addTrade(date){
   journal[date].trades.push({pnl:null,time:null,strategy:null,timeframe:null,bias:null,rating:null,smt:null,smtType:null,vshape:null,dol:[],notes:'',photos:[],collapsed:false});
-  save(); render();
-  setTimeout(()=>{
-    const cards = document.querySelectorAll(`#day-${date} .trade-card`);
-    if(cards.length) cards[cards.length-1].scrollIntoView({behavior:'smooth',block:'start'});
-  },50);
+  save();render();
+  setTimeout(()=>{const cards=document.querySelectorAll(`#day-${date} .trade-card`);if(cards.length)cards[cards.length-1].scrollIntoView({behavior:'smooth',block:'start'});},50);
 }
-function deleteTrade(date, idx) {
-  if(!confirm('Trade verwijderen?')) return;
-  journal[date].trades.splice(idx,1); save(); render();
-}
-function deleteDay(date) {
-  if(!confirm(`Dag ${date} en alle trades verwijderen?`)) return;
-  delete journal[date]; save(); render();
-}
+function deleteTrade(date,idx){if(!confirm('Trade verwijderen?'))return;journal[date].trades.splice(idx,1);save();render();}
+function deleteDay(date){if(!confirm(`Dag ${date} verwijderen?`))return;delete journal[date];save();render();}
 
-// ─── MODAL ───────────────────────────────────────────
-function openModal() {
-  document.getElementById('modalDate').value = new Date().toISOString().split('T')[0];
-  document.getElementById('modalOverlay').classList.add('open');
-}
-function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
-function createDay() {
-  const date = document.getElementById('modalDate').value;
-  if(!date) return;
-  if(!journal[date]) journal[date]={trades:[]};
-  save(); render(); closeModal();
-  setTimeout(()=>{ const el=document.getElementById(`day-${date}`); if(el) el.scrollIntoView({behavior:'smooth'}); },100);
+// ── MODAL ──
+function openModal(){document.getElementById('modalDate').value=new Date().toISOString().split('T')[0];document.getElementById('modalOverlay').classList.add('open');}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+function createDay(){
+  const date=document.getElementById('modalDate').value;if(!date)return;
+  if(!journal[date])journal[date]={trades:[]};
+  save();render();closeModal();
+  setTimeout(()=>{const el=document.getElementById(`day-${date}`);if(el)el.scrollIntoView({behavior:'smooth'});},100);
   showToast('Dag aangemaakt');
 }
 
-// ─── CALENDAR ────────────────────────────────────────
-function renderCalendar() {
-  const months = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
-  const days = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
-  document.getElementById('calTitle').textContent = `${months[calMonth]} ${calYear}`;
-  const grid = document.getElementById('calGrid');
-
-  let html = days.map(d=>`<div class="cal-header">${d}</div>`).join('');
-
-  const first = new Date(calYear, calMonth, 1);
-  let startDow = first.getDay(); // 0=Sun
-  startDow = startDow===0 ? 6 : startDow-1; // Mon=0
-
-  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
-  const daysInPrev = new Date(calYear, calMonth, 0).getDate();
-  const todayStr = new Date().toISOString().split('T')[0];
-
-  let cells = [];
-  for(let i=0;i<startDow;i++) cells.push({day:daysInPrev-startDow+1+i,other:true});
-  for(let i=1;i<=daysInMonth;i++) cells.push({day:i,other:false});
-  while(cells.length%7!==0) cells.push({day:cells.length-startDow-daysInMonth+1,other:true});
-
-  cells.forEach(({day,other}) => {
-    if(other) { html+=`<div class="cal-day other-month"><div class="cal-num">${day}</div></div>`; return; }
-    const mm = String(calMonth+1).padStart(2,'0');
-    const dd = String(day).padStart(2,'0');
-    const dateStr = `${calYear}-${mm}-${dd}`;
-    const isToday = dateStr===todayStr;
-    const dayData = journal[dateStr];
-    let pnlHtml='', dotHtml='', hasTrades=false;
-    if(dayData && dayData.trades.length) {
+// ── CALENDAR ──
+const now=new Date();
+let calYear=now.getFullYear(),calMonth=now.getMonth();
+function renderCalendar(){
+  const months=['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
+  const days=['Ma','Di','Wo','Do','Vr','Za','Zo'];
+  document.getElementById('calTitle').textContent=`${months[calMonth]} ${calYear}`;
+  const grid=document.getElementById('calGrid');
+  let html=days.map(d=>`<div class="cal-header">${d}</div>`).join('');
+  const first=new Date(calYear,calMonth,1);
+  let startDow=first.getDay();startDow=startDow===0?6:startDow-1;
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const daysInPrev=new Date(calYear,calMonth,0).getDate();
+  const todayStr=new Date().toISOString().split('T')[0];
+  let cells=[];
+  for(let i=0;i<startDow;i++)cells.push({day:daysInPrev-startDow+1+i,other:true});
+  for(let i=1;i<=daysInMonth;i++)cells.push({day:i,other:false});
+  while(cells.length%7!==0)cells.push({day:cells.length-startDow-daysInMonth+1,other:true});
+  cells.forEach(({day,other})=>{
+    if(other){html+=`<div class="cal-day other-month"><div class="cal-num">${day}</div></div>`;return;}
+    const mm=String(calMonth+1).padStart(2,'0'),dd=String(day).padStart(2,'0');
+    const dateStr=`${calYear}-${mm}-${dd}`;
+    const isToday=dateStr===todayStr;
+    const dayData=journal[dateStr];
+    let pnlHtml='',dotHtml='',hasTrades=false;
+    if(dayData&&dayData.trades.length){
       hasTrades=true;
-      let wins=0,losses=0,bes=0;
-      dayData.trades.forEach(t=>{
-        if(t.pnl==='profit')wins++;
-        else if(t.pnl==='loss')losses++;
-        else if(t.pnl==='be')bes++;
-      });
-      const dominant = wins>losses?'profit':losses>wins?'loss':'be';
-      const label = wins>losses?'W':losses>wins?'L':'B/E';
-      pnlHtml=`<div class="cal-pnl ${dominant}">${label}</div>`;
-      const dots = [...Array(wins).fill('<span class="dp"></span>'),...Array(losses).fill('<span class="dl"></span>'),...Array(bes).fill('<span class="db"></span>')].join('');
-      dotHtml=`<div class="cal-dot">${dots}</div>`;
+      let w=0,l=0,b=0;
+      dayData.trades.forEach(t=>{if(t.pnl==='profit')w++;else if(t.pnl==='loss')l++;else if(t.pnl==='be')b++;});
+      const dom=w>l?'profit':l>w?'loss':'be';
+      const lbl=w>l?'W':l>w?'L':'B/E';
+      pnlHtml=`<div class="cal-pnl ${dom}">${lbl}</div>`;
+      dotHtml=`<div class="cal-dot">${[...Array(w).fill('<span class="dp"></span>'),...Array(l).fill('<span class="dl"></span>'),...Array(b).fill('<span class="db"></span>')].join('')}</div>`;
     }
     html+=`<div class="cal-day ${hasTrades?'has-trades':''} ${isToday?'today':''}" ${hasTrades?`onclick="goToDay('${dateStr}')"`:''}>
-      <div class="cal-num">${day}</div>
-      ${pnlHtml}${dotHtml}
+      <div class="cal-num">${day}</div>${pnlHtml}${dotHtml}
     </div>`;
   });
-
-  grid.innerHTML = html;
+  grid.innerHTML=html;
 }
-function calPrev() { calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); }
-function calNext() { calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); }
-function goToDay(date) {
-  switchTab('journal', document.querySelector('.tab'));
-  document.querySelectorAll('.tab')[0].classList.add('active');
-  document.querySelectorAll('.tab')[1].classList.remove('active');
-  setTimeout(()=>{ const el=document.getElementById(`day-${date}`); if(el) el.scrollIntoView({behavior:'smooth'}); },100);
+function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
+function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalendar();}
+function goToDay(date){
+  switchTab('journal');
+  setTimeout(()=>{const el=document.getElementById(`day-${date}`);if(el)el.scrollIntoView({behavior:'smooth'});},100);
 }
 
-// ─── EXPORT / IMPORT ─────────────────────────────────
-function exportData() {
-  const blob = new Blob([JSON.stringify(journal,null,2)],{type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href=url; a.download=`tj-${new Date().toISOString().split('T')[0]}.json`; a.click();
-  URL.revokeObjectURL(url); showToast('Geëxporteerd');
+// ── EXPORT / IMPORT ──
+function exportData(){
+  const blob=new Blob([JSON.stringify(journal,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download=`tj-${new Date().toISOString().split('T')[0]}.json`;a.click();
+  URL.revokeObjectURL(url);showToast('Geëxporteerd');
 }
-function importClick() { document.getElementById('importFile').click(); }
-function importData(e) {
-  const f=e.target.files[0]; if(!f) return;
+function importClick(){document.getElementById('importFile').click();}
+function importData(e){
+  const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
   r.onload=ev=>{try{Object.assign(journal,JSON.parse(ev.target.result));save();render();showToast('Geïmporteerd');}catch{alert('Ongeldig bestand');}};
-  r.readAsText(f); e.target.value='';
+  r.readAsText(f);e.target.value='';
 }
 
-// ─── LIGHTBOX ────────────────────────────────────────
-function openLb(src) { document.getElementById('lbImg').src=src; document.getElementById('lightbox').classList.add('open'); }
-function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+// ── LIGHTBOX ──
+function openLb(src){document.getElementById('lbImg').src=src;document.getElementById('lightbox').classList.add('open');}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
 
-// ─── TOAST ───────────────────────────────────────────
-function showToast(msg) {
-  const t=document.getElementById('toast'); t.textContent=msg;
-  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200);
-}
+// ── TOAST ──
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
-// ─── KEYBOARD ────────────────────────────────────────
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeModal();closeLightbox();}
-});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeLightbox();}});
 document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
 
-// ─── INIT ────────────────────────────────────────────
 render();
 </script>
 </body>
@@ -650,4 +528,4 @@ ENDOFFILE
 echo "OK: $(wc -c < /mnt/user-data/outputs/trading-journal/index.html) bytes"
 Output
 
-OK: 34539 bytes
+OK: 31602 bytes
